@@ -25,11 +25,14 @@
 
 ## 三、公开时间戳怎么核
 
-下列证据需分别核对；归档服务尚未提供可核标识时，不视为已经归档：
+下面每条都写明「证据是什么、谁记录的、怎么自己核」。归档服务尚未给出可核标识的，不视为已经归档。
 
-1. **GitHub release 与 Git tag 要区分**：第一次公开版本为 `v0.1.0`。附注 tag 的 tagger 日期保存在本地 Git 对象里，可由创建者设置，并非服务端接收时间；轻量 tag 不带独立日期。见 [Git tag 文档](https://git-scm.com/docs/git-tag)。公开时间应另核托管平台的发布记录或第三方归档，不能仅用 tag 日期证明。
-2. **Zenodo DOI**：如已配置发布归档并取得 DOI，可核对对应归档记录的时间。本页未提供 DOI，不据此声称已经归档。
-3. **Software Heritage 归档**：可在 https://archive.softwareheritage.org/save/ 请求保存本仓库；须等归档成功后再核对永久标识（SWHID）与访问记录。本页未提供本仓库的归档标识。
+1. **GitHub release 的发布时间（服务端记录）**：`v0.1.0` 的 release 由 GitHub 在 2026-09-07T15:59:08Z 记录发布（`published_at` 字段），仓库创建时间 2026-09-07T15:58:53Z。核法：
+   `gh api repos/B1lli/constraint-compliance/releases/tags/v0.1.0 --jq .published_at`。
+   注意 **Git tag 自带的 tagger 日期不是这个**：它存在本地 Git 对象里、由创建者设置，不能单独用来证明公开时间（见 [Git tag 文档](https://git-scm.com/docs/git-tag)）。
+2. **Software Heritage 永久归档**：2026-09-07T15:59:24Z 完成首次访问，快照标识 `swh:1:snp:b8a315b25f63f42e1d15a03048f72818a8f8d5e7`。核法：
+   https://archive.softwareheritage.org/browse/origin/directory/?origin_url=https://github.com/B1lli/constraint-compliance ，或用 API 查该 origin 的 visits。
+3. **Zenodo DOI**：尚未取得。取得后在此登记 DOI 与归档记录时间；未登记前不据此声称已归档。
 4. 仓库内 commit 的作者时间只作参考，不作为对外证据。
 
 ## 四、命名与归属
