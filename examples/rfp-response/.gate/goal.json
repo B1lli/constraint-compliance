@@ -1,0 +1,21 @@
+{
+  "status": "active",
+  "level": "L4",
+  "objective": "在工作区 RFP响应.md 中对客户 RFP 条款 R-17 至 R-21 逐条给出「支持/部分支持/不支持」状态、证据与风险说明，无法满足项显式列出，全文不用「后续规划」替代当前能力。",
+  "intent": "交付物：RFP 逐条响应文档。消费者：销售交客户采购部评标。成功信号：五条各有独立状态与证据。非目标：不改产品能力、不写方案书。错一次的代价：对外交付，多承诺一条即合同风险。",
+  "rubric": {
+    "precision": "precise",
+    "criteria": [
+      { "id": "c1", "text": "R-17 到 R-21 五个编号逐个作为小节标题出现且与原文一致", "howToJudge": "逐个搜索五个编号，都在标题里且未改写", "expectedEvidence": "artifact", "hard": true,
+        "validator": { "type": "ids_covered", "file": "RFP响应.md", "ids": ["R-17", "R-18", "R-19", "R-20", "R-21"], "as_heading": true } },
+      { "id": "c2", "text": "每个编号有独立响应段落，没有两条合并成一段回答", "howToJudge": "每个编号下方是自己的段落，不出现合并句", "expectedEvidence": "artifact", "hard": true },
+      { "id": "c3", "text": "每条标注「支持 / 部分支持 / 不支持」三者之一", "howToJudge": "每个编号小节里含这三个词之一", "expectedEvidence": "artifact", "hard": true,
+        "validator": { "type": "status_vocab", "file": "RFP响应.md", "id_regex": "R-\\d\\d", "vocab": ["不支持", "部分支持", "支持"] } },
+      { "id": "c4", "text": "每条「支持」或「部分支持」附证据或「待补证据」标记", "howToJudge": "段落内有证据句或字面「待补证据」", "expectedEvidence": "artifact", "hard": true },
+      { "id": "c5", "text": "全文不用「后续规划」「持续扩展」「未来支持」替代当前能力", "howToJudge": "全文搜索这三个词，命中处都不是在回答能力问题", "expectedEvidence": "artifact", "hard": true,
+        "validator": { "type": "forbidden_terms", "file": "RFP响应.md", "terms": ["后续规划", "持续扩展", "未来支持"] } },
+      { "id": "c6", "text": "R-20 写明当前已支持的是飞书、企业微信、钉钉中的哪一个，不泛称「主流 IM」", "howToJudge": "R-20 段落点名具体 IM；出现「主流 IM」即不过", "expectedEvidence": "artifact", "hard": false,
+        "validator": { "type": "section_required_terms", "file": "RFP响应.md", "heading": "R-20", "terms": ["飞书|企业微信|钉钉"] } }
+    ]
+  }
+}
