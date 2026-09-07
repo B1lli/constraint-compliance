@@ -25,11 +25,11 @@
 
 ## 三、公开时间戳怎么核
 
-按可信度从高到低：
+下列证据需分别核对；归档服务尚未提供可核标识时，不视为已经归档：
 
-1. **GitHub release / tag**：tag 的创建时间由 GitHub 服务端记录，不受本地时钟影响。第一次公开版本打 `v0.1.0`。
-2. **Zenodo DOI**：GitHub release 触发 Zenodo 归档后得到带时间戳的 DOI，学术引用与优先权主张的通行做法。
-3. **Software Heritage 归档**：在 https://archive.softwareheritage.org/save/ 提交本仓库地址，得到永久标识（SWHID）与归档时间。
+1. **GitHub release 与 Git tag 要区分**：第一次公开版本为 `v0.1.0`。附注 tag 的 tagger 日期保存在本地 Git 对象里，可由创建者设置，并非服务端接收时间；轻量 tag 不带独立日期。见 [Git tag 文档](https://git-scm.com/docs/git-tag)。公开时间应另核托管平台的发布记录或第三方归档，不能仅用 tag 日期证明。
+2. **Zenodo DOI**：如已配置发布归档并取得 DOI，可核对对应归档记录的时间。本页未提供 DOI，不据此声称已经归档。
+3. **Software Heritage 归档**：可在 https://archive.softwareheritage.org/save/ 请求保存本仓库；须等归档成功后再核对永久标识（SWHID）与访问记录。本页未提供本仓库的归档标识。
 4. 仓库内 commit 的作者时间只作参考，不作为对外证据。
 
 ## 四、命名与归属
