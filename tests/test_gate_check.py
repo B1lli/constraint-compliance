@@ -182,5 +182,38 @@ class ExitCodes(unittest.TestCase):
         self.assertEqual(code, 2, out)
 
 
+class BundledExample(unittest.TestCase):
+    """Run the shipped fixture, including the README's negative control."""
+
+    def test_clause_count_and_forbidden_term_mutation(self):
+        import shutil
+        source = os.path.join(HERE, '..', 'examples', 'rfp-response')
+        with tempfile.TemporaryDirectory() as root:
+            shutil.copytree(source, os.path.join(root, 'example'))
+            root = os.path.join(root, 'example')
+            def check():
+                result = subprocess.run(
+                    [sys.executable, SCRIPT, '.gate/goal.json', '--root', '.'],
+                    cwd=root, capture_output=True, text=True)
+                with open(os.path.join(root, '.gate/check.json'), encoding='utf-8') as f:
+                    data = json.load(f)
+                return result, {r['id']: r for r in data['results']}
+            result, rows = check()
+            self.assertEqual(result.returncode, 0, result.stdout)
+            self.assertEqual(rows['c3']['note'], '5 条都有状态词')
+            self.assertEqual([rows[c]['ok'] for c in ['c1', 'c3', 'c5', 'c6']], [True] * 4)
+            self.assertEqual([rows[c]['ok'] for c in ['c2', 'c4']], [None, None])
+            artifact = os.path.join(root, 'RFP响应.md')
+            with open(artifact, encoding='utf-8') as f:
+                text = f.read()
+            write(root, 'RFP响应.md', text.replace('支持。', '后续规划支持。', 1))
+            result, rows = check()
+            self.assertEqual(result.returncode, 1, result.stdout)
+            self.assertEqual([c for c, r in rows.items() if r['ok'] is False], ['c5'])
+            write(root, 'RFP响应.md', text)
+            result, _ = check()
+            self.assertEqual(result.returncode, 0, result.stdout)
+
+
 if __name__ == '__main__':
     unittest.main()

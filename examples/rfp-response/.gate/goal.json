@@ -10,7 +10,7 @@
         "validator": { "type": "ids_covered", "file": "RFP响应.md", "ids": ["R-17", "R-18", "R-19", "R-20", "R-21"], "as_heading": true } },
       { "id": "c2", "text": "每个编号有独立响应段落，没有两条合并成一段回答", "howToJudge": "每个编号下方是自己的段落，不出现合并句", "expectedEvidence": "artifact", "hard": true },
       { "id": "c3", "text": "每条标注「支持 / 部分支持 / 不支持」三者之一", "howToJudge": "每个编号小节里含这三个词之一", "expectedEvidence": "artifact", "hard": true,
-        "validator": { "type": "status_vocab", "file": "RFP响应.md", "id_regex": "R-\\d\\d", "vocab": ["不支持", "部分支持", "支持"] } },
+        "validator": { "type": "status_vocab", "file": "RFP响应.md", "id_regex": "^R-\\d\\d(?:\\s|$)", "vocab": ["不支持", "部分支持", "支持"] } },
       { "id": "c4", "text": "每条「支持」或「部分支持」附证据或「待补证据」标记", "howToJudge": "段落内有证据句或字面「待补证据」", "expectedEvidence": "artifact", "hard": true },
       { "id": "c5", "text": "全文不用「后续规划」「持续扩展」「未来支持」替代当前能力", "howToJudge": "全文搜索这三个词，命中处都不是在回答能力问题", "expectedEvidence": "artifact", "hard": true,
         "validator": { "type": "forbidden_terms", "file": "RFP响应.md", "terms": ["后续规划", "持续扩展", "未来支持"] } },
