@@ -124,12 +124,12 @@ combinations were observed.
 ## 6. Known limitations
 
 1. Triggering rests on one sentence and is very sensitive to the host's skill-list length and description budget; on
-   the production stack only 1 of 4 delivered positives fired, cause not isolated (four variables changed together).
+   the production stack only 1 of 4 delivered positives fired, cause not isolated (four variables changed together; UNPROVEN).
 2. The evaluator only advises; an agent determined to ship can ignore it. This is a design choice (no user-facing
    confirmation gates, no code as final arbiter) and the cost is stated.
 3. Deterministic validators cover eleven decidable shapes; semantic criteria rely entirely on the audit and the evaluator.
 4. The skill body is Chinese (the description is bilingual). An English body has not been written or measured.
-5. A-grade evidence on the effect side (baseline red, gated green, replicated) exists for one real-incident replay case.
+5. A-grade evidence on the effect side (baseline red, gated green, replicated) exists for one real-incident replay case; the sample is small.
 
 ## 7. Glossary
 
