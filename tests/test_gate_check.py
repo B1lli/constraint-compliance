@@ -117,6 +117,13 @@ class ValidatorPairs(unittest.TestCase):
         self.assertFalse(ok)
         self.assertIn('1/2', note)
 
+    def test_missing_file_is_undecided_not_pass(self):
+        # 文本类校验漏填 file：以前拿空文本核，「不出现」型校验会假过；现在按未判定处理
+        ok, note = self.run_v({'type': 'forbidden_terms', 'terms': ['GPT']})
+        self.assertIsNone(ok)
+        self.assertIn('file', note)
+        self.assertIsNone(self.run_v({'type': 'regex_absent', 'pattern': 'x'})[0])
+
     def test_missing_file_and_unknown_type(self):
         self.assertFalse(self.run_v({'type': 'forbidden_terms', 'file': 'nope.md', 'terms': ['x']})[0])
         self.assertIsNone(self.run_v({'type': 'no_such_type', 'file': 'doc.md'})[0])
@@ -178,6 +185,19 @@ class ExitCodes(unittest.TestCase):
         code, out, _ = self.run_main(self.goal([{'id': 'c1', 'hard': True, 'text': '只有语义标准'}]))
         self.assertEqual(code, 2, out)
         self.assertIn('没核', out)
+
+    def test_missing_file_hard_criterion_is_exit_1(self):
+        code, out, data = self.run_main(self.goal([
+            {'id': 'c1', 'hard': True, 'validator': {'type': 'forbidden_terms', 'terms': ['GPT']}}]))
+        self.assertEqual(code, 1, out)
+        self.assertEqual(data['hard_unproven'], 1)
+
+    def test_invalid_criteria_does_not_leave_stale_report(self):
+        stale = write(self.root, '.gate/check.json', json.dumps({'hard_fail': 0, 'hard_unproven': 0, 'results': [{'id': 'c1', 'ok': True}]}))
+        code, out, data = self.run_main({'status': 'active', 'objective': 'o', 'rubric': {'criteria': []}})
+        self.assertEqual(code, 2, out)
+        self.assertTrue(data['nothing_checked'])
+        self.assertEqual(data['results'], [])
 
     def test_no_criteria_is_exit_2(self):
         code, out, _ = self.run_main({'status': 'active', 'objective': 'o', 'rubric': {'criteria': []}})

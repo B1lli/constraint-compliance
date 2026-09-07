@@ -111,8 +111,12 @@ def run_one_file(root, v, f):
 def run_one(root, v):
     """file 是 glob 时逐个校验全部命中文件，全部通过才算通过。
     以前只取排序后的第一个文件，另外几个文件违规也判绿。"""
-    if v.get('type') == 'file_exists' or not v.get('file'):
+    if v.get('type') == 'file_exists':
         return run_one_file(root, v, None)
+    if not v.get('file'):
+        # 文本类校验没写 file：没有产物可读，按「未判定」处理。以前会拿空文本去核，
+        # 禁用词、regex_absent 这类「不出现」型校验会在空文本上假过。
+        return None, 'validator 没写 file，文本类校验没有产物可读，按未判定处理'
     files = resolve_all(root, v['file'])
     if not files:
         return False, f"找不到文件 {v['file']!r}"
@@ -137,6 +141,10 @@ def main():
         print('不能核对：goal.json 里没有 rubric.criteria（标准列表）。本脚本只认这个形状：')
         print('  {"status":"active","level":"L3|L4","objective":"…","intent":"…","rubric":{"precision":"precise|coarse","criteria":[{"id":"c1","text":"…","howToJudge":"…","expectedEvidence":"artifact","hard":true,"validator":{…}}]}}')
         print('把标准写进 rubric.criteria 再跑。零条标准 = 什么都没核对，不是通过。')
+        # 不留上一次的 check.json 给下游误读：写一份「什么都没核」的报告再退出。
+        gate_dir = os.path.dirname(os.path.abspath(goal_path)); os.makedirs(gate_dir, exist_ok=True)
+        with open(os.path.join(gate_dir, 'check.json'), 'w', encoding='utf-8') as f:
+            json.dump(dict(checked_at=__import__('time').strftime('%Y-%m-%dT%H:%M:%S%z'), error='no rubric.criteria', nothing_checked=True, hard_fail=0, hard_unproven=0, results=[]), f, ensure_ascii=False, indent=1)
         sys.exit(2)
     results = []; hard_fail = 0; hard_unproven = 0
     for c in criteria:

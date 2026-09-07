@@ -23,9 +23,9 @@ no matches fails. Matches are not restricted to regular files: `file_exists` als
 while text validators try to open each matched path. Text is read as UTF-8 with invalid bytes replaced.
 
 A criterion defaults to `hard: true`. An absent, null, or empty `validator` is treated as no check.
-Supply `type` and a nonempty `file` for text checks: a missing or empty `file` currently checks empty text,
-which can make absence checks pass without reading an artifact. This is a known checker limitation, not a
-supported way to prove file content. The checker does not validate the whole goal schema or change its status.
+Supply `type` and a nonempty `file` for text checks: a text validator with a missing or empty `file` has no
+artifact to read and is reported as undecided (`ok: null`), which fails a hard criterion. The checker does not
+validate the whole goal schema or change its status.
 
 Regexes use Python `re`. Only `forbidden_terms`, `required_terms`, `regex_absent`, `regex_present`, and the
 **term** searches in `section_required_terms` honor `ignore_case` (default `true`). Other regex searches
@@ -47,8 +47,9 @@ its own heading and all child subsections, ending before the next heading of the
 Criteria without a validator are reported as `未判` (not checked) and left to the agent's audit and the independent evaluator.
 
 Invalid JSON, an unreadable goal, or failure to write the result raises an uncaught error (normally exit 1),
-without a fresh result report. Missing/invalid criteria exit 2 before writing a report; an old `check.json`
-can therefore remain. A nonempty criteria list with no validators writes the report and then exits 2.
+without a fresh result report. Missing/invalid criteria write a report with `"nothing_checked": true` and empty
+`results` before exiting 2, so a stale `check.json` from an earlier run is never left behind. A nonempty criteria
+list with no validators writes the normal report and then exits 2.
 
 ## Types
 
