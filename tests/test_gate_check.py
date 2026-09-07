@@ -81,8 +81,10 @@ class ValidatorPairs(unittest.TestCase):
     def test_regex_absent_present(self):
         self.assertTrue(self.run_v({'type': 'regex_absent', 'file': 'doc.md', 'pattern': r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'})[0])
         self.assertFalse(self.run_v({'type': 'regex_absent', 'file': 'doc.md', 'pattern': r'R-1\d'})[0])
-        self.assertTrue(self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'^关键词：'})[0] or
-                        self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'关键词：'})[0])
+        # ^ anchors to the whole text unless multiline is explicitly requested.
+        self.assertFalse(self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'^关键词：'})[0])
+        self.assertTrue(self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'(?m)^关键词：'})[0])
+        self.assertTrue(self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'关键词：'})[0])
         self.assertFalse(self.run_v({'type': 'regex_present', 'file': 'doc.md', 'pattern': r'来源：'})[0])
 
     def test_file_exists(self):
