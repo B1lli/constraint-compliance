@@ -44,7 +44,9 @@ class ValidatorPairs(unittest.TestCase):
     """run_one 层：每个类型一正一负。"""
 
     def setUp(self):
-        self.root = tempfile.mkdtemp()
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = self.temp.name
         write(self.root, 'doc.md', GOOD_DOC)
 
     def run_v(self, v):
@@ -122,14 +124,19 @@ class ExitCodes(unittest.TestCase):
     """main 层：退出码与 check.json。"""
 
     def setUp(self):
-        self.root = tempfile.mkdtemp()
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = self.temp.name
         write(self.root, 'doc.md', GOOD_DOC)
 
     def run_main(self, goal):
         gp = write(self.root, '.gate/goal.json', json.dumps(goal, ensure_ascii=False))
         r = subprocess.run([sys.executable, '-X', 'utf8', SCRIPT, gp, '--root', self.root], capture_output=True, text=True)
         chk = os.path.join(self.root, '.gate', 'check.json')
-        data = json.load(io.open(chk, encoding='utf-8')) if os.path.exists(chk) else None
+        data = None
+        if os.path.exists(chk):
+            with io.open(chk, encoding='utf-8') as f:
+                data = json.load(f)
         return r.returncode, r.stdout, data
 
     def goal(self, criteria):
