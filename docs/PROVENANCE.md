@@ -35,4 +35,4 @@
 ## 四、命名与归属
 
 - 仓库归作者个人 GitHub 账号 `B1lli`，版权人为作者个人；fork 会保留「forked from B1lli/constraint-compliance」。
-- skill 名保持功能性的 `constraint-compliance`，不加产品前缀：实测里 skill 名字的排位与字面不进入宿主的任何触发判断（见 METHOD.md §5），前缀既不帮触发也不伤触发，而描述功能的名字更容易被搜到；作者归属放在 `NOTICE`、`CITATION.cff`、`SKILL.md` 的 frontmatter `metadata` 与本文里。
+- skill 名保持功能性的 `constraint-compliance`，不加产品前缀：这是功能命名选择，不是触发效果结论。[METHOD.md 第五节](METHOD.md#五怎么量量到了什么)没有提供名称或前缀的对照实验，其触发影响为 UNPROVEN；作者归属放在 `NOTICE`、`CITATION.cff`、`SKILL.md` 的 frontmatter `metadata` 与本文里。
