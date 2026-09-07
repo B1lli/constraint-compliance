@@ -29,8 +29,11 @@ assistant and is released here under Apache-2.0. 中文说明见 [README.zh-CN.m
 - [Contributing](#contributing)
 - [Citation](#citation)
 - [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## Why
+
+A **learned item** is one persistently saved rule. **RFP** means request for proposal; an RFP response answers procurement requirements clause by clause.
 
 "Taught, but not learned." A user tells an assistant *"proposals must open with a section on the customer's
 environment constraints"* or *"never answer an RFP capability question with 'planned for a future release'"*. The
@@ -71,13 +74,13 @@ request hits a taught rule
  intent (5 lines) ──▶ level L2 / L3 / L4 ──▶ rubric (≤12 criteria, validators where decidable)
         │
         ▼
- .gate/goal.json  (status: active)
+ .gate/goal.json  (status: active; L2 exits with a self-check list)
         │
         ▼  ...do the work...
         │
  audit every criterion against the artifact
  python3 scripts/gate_check.py .gate/goal.json --root .      # deterministic checks → .gate/check.json
- independent evaluator (read-only sub-agent) → .gate/verdict.json
+ independent evaluator (read-only sub-agent; L3 recommended, L4 required) → .gate/verdict.json
         │
         ▼
  hard fail / unverifiable ──▶ fix, re-audit, re-check, re-evaluate
