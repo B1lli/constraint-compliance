@@ -157,7 +157,9 @@ def main():
     for r in results:
         mark = {True: '通过', False: '不成立', None: '未判'}[r['ok']]
         print(f"- {r['id']} [{'硬' if r['hard'] else '软'}] {mark}：{r['note']}")
-    ran = sum(1 for r in results if r['ok'] is not None)
+    # 数「挂了 validator 的标准」，不数「判出结果的标准」：唯一一条挂了校验器却判不出来时，
+    # 以前会误报成「没有任何一条标准挂了 validator」并退出 2，把 UNPROVEN 说成了「没核」。
+    ran = sum(1 for r in results if r.get('has_validator'))
     print(f'硬标准不成立：{hard_fail} 条；硬标准未判定（UNPROVEN）：{hard_unproven} 条；有脚本校验的标准：{ran}/{len(results)} 条')
     if hard_unproven:
         print('注意：上面标「未判」的硬标准挂了 validator 却没跑出结果（非法正则／未知校验类型／读不到文件）。没核不等于通过，按不通过处理。')
