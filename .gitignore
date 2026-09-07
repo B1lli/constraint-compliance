@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.gate/check.json
+.gate/verdict.json
+.DS_Store

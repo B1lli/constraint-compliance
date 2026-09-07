@@ -1,0 +1,13 @@
+constraint-compliance — 强遵循门控（Constraint-Compliance Gate）agent skill
+Copyright 2026 Guangyao Chi (池光耀, GitHub: B1lli)
+
+This work began as the built-in skill of a production AI work assistant and was
+released under the Apache License 2.0 in September 2026. The method is described
+in docs/METHOD.en.md (English) and docs/METHOD.md (中文); the dated design history
+is in docs/PROVENANCE.md.
+
+Redistributions of this work or derivative works must retain the attribution
+in this NOTICE file (Apache License 2.0, section 4(d)).
+
+本作品最初是一款生产环境 AI 工作助理的内置 skill，于 2026 年 9 月以 Apache License 2.0 公开。
+按 Apache License 2.0 第 4(d) 条，再分发本作品或其衍生作品时须保留本 NOTICE 中的归属声明。

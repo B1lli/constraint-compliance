@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use or build on this method, please cite it as below."
+title: "constraint-compliance: a use-time gate that compiles a taught rule into an auditable goal"
+type: software
+authors:
+  - family-names: "Chi"
+    given-names: "Guangyao"
+    alias: "B1lli"
+version: 0.1.0
+date-released: 2026-09-07
+license: Apache-2.0
+repository-code: "https://github.com/B1lli/constraint-compliance"
+abstract: >
+  An agent skill for long-running, multi-turn assistants. When a request falls under a rule the
+  user taught earlier (persisted in a project instruction file, a memory note, or a learned item),
+  the agent itself decides at use time whether the delivery is worth a hard-compliance gate,
+  writes an intent statement, picks a level (L2/L3/L4), compiles the rule into a rubric of
+  verifiable criteria, sets a goal, audits the deliverable against the rubric before declaring
+  completion, and responds to an independent advisory evaluator. Rubric and goal are generated
+  from the taught rule at use time rather than hand-written in advance.
+keywords:
+  - agent skills
+  - instruction following
+  - self-evolving agents
+  - learned constraints
+  - acceptance criteria
+  - goal loop
