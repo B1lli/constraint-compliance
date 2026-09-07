@@ -48,12 +48,17 @@ git clone https://github.com/B1lli/constraint-compliance.git ~/.agents/skills/co
 
 ## 试一下
 
+先进入克隆的仓库目录（上述用户级安装对应 `cd ~/.claude/skills/constraint-compliance` 或
+`cd ~/.agents/skills/constraint-compliance`）。以下命令从仓库根目录运行；括号中的子 shell 不改变后续命令的工作目录。
+
 ```bash
-cd examples/rfp-response
-python3 ../../scripts/gate_check.py .gate/goal.json --root .
+(
+  cd examples/rfp-response
+  python3 ../../scripts/gate_check.py .gate/goal.json --root .
+)
 ```
 
-会看到六条标准里挂了校验器的四条逐条过 / 不过，另两条标「无脚本校验，靠审计与独立评估」。把 `RFP响应.md` 里某一条的「支持」改成「后续规划支持」再跑，c5 会变红并以非零退出。
+会看到六条标准里挂了校验器的四条逐条过 / 不过，另两条标「无脚本校验，靠审计与独立评估」。把 `examples/rfp-response/RFP响应.md` 里某一条的「支持」改成「后续规划支持」再跑，c5 会变红并以退出码 1 退出。撤销该编辑再跑，恢复退出码 0。
 
 跑控制组测试（每种校验器一正一负，四条退出码语义）：
 

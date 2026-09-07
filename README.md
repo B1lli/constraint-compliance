@@ -118,16 +118,20 @@ The skill body is written in Chinese; the trigger description is bilingual. See 
 
 ## Quick start
 
-Run the checker on the bundled example:
+First enter the cloned repository (for the user-wide install above, use
+`cd ~/.claude/skills/constraint-compliance` or `cd ~/.agents/skills/constraint-compliance`).
+Run these commands from that repository root; the subshell keeps the next command at the root:
 
 ```bash
-cd examples/rfp-response
-python3 ../../scripts/gate_check.py .gate/goal.json --root .
+(
+  cd examples/rfp-response
+  python3 ../../scripts/gate_check.py .gate/goal.json --root .
+)
 ```
 
 Four of the six criteria carry validators and are checked; the other two are reported as "not checked, left to the
-audit and the independent evaluator". Now edit `RFP响应.md` so one clause says the capability is "后续规划" (planned
-for later) and run again: criterion c5 turns red and the script exits non-zero.
+audit and the independent evaluator". Now edit `examples/rfp-response/RFP响应.md` so one clause says the capability is "后续规划" (planned
+for later) and run again: criterion c5 turns red and the script exits 1. Undo that edit and rerun to restore exit 0.
 
 Run the test suite:
 
