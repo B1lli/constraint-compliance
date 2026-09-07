@@ -136,6 +136,11 @@ Four of the six criteria carry validators and are checked; the other two are rep
 audit and the independent evaluator". Now edit `examples/rfp-response/RFP响应.md` so one clause says the capability is "后续规划" (planned
 for later) and run again: criterion c5 turns red and the script exits 1. Undo that edit and rerun to restore exit 0.
 
+This is a synthetic checker example, not a completed acceptance audit. Its cited evidence documents are
+illustrative names and are not bundled. Criteria c2 and c4 need manual evidence review. The c6 validator only
+checks that an integration name occurs; it does not check the separate ban on generic wording. The c5 validator
+rejects the listed phrases anywhere, including quotations, so contextual exceptions require agent review.
+
 Run the test suite:
 
 ```bash
