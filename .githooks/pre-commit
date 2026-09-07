@@ -1,0 +1,3 @@
+#!/bin/sh
+# Refuse staged content that carries AI-assistant provenance markers.
+exec python3 "$(git rev-parse --show-toplevel)/scripts/check_markers.py"

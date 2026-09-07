@@ -1,0 +1,3 @@
+#!/bin/sh
+# Refuse commit messages that carry AI-assistant provenance markers (trailers, watermarks).
+exec python3 "$(git rev-parse --show-toplevel)/scripts/check_markers.py" --message "$1"
