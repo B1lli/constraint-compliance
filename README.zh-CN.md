@@ -29,7 +29,20 @@
 git clone https://github.com/B1lli/constraint-compliance.git ~/.claude/skills/constraint-compliance
 ```
 
-放进项目级 `.claude/skills/constraint-compliance/` 也可以。Codex 等其他宿主：把整个目录放到它的 skills 目录下即可，正文里已写明两种宿主各用什么子代理机制做独立评估。
+放进项目级 `.claude/skills/constraint-compliance/` 也可以。
+
+Codex，用户级安装：
+
+```bash
+git clone https://github.com/B1lli/constraint-compliance.git ~/.agents/skills/constraint-compliance
+```
+
+项目级则克隆到 `<project>/.agents/skills/constraint-compliance`。
+见[宿主技能目录说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)。
+其他宿主：把整个目录放到它的 skills 目录下。正文说明了各宿主的独立评估机制；没有子代理时，退回换一副陌生读者的眼光重读。
+
+安装后，在要使用它的项目中新开宿主会话，请 Agent 对受已存规矩约束的交付使用 `constraint-compliance`，确认它读取本仓库的 `SKILL.md`。
+安装只使技能可用，不证明它会自动触发或产物已合格。
 
 需要 Python 3.8+（只用标准库）来跑 `scripts/gate_check.py`。
 

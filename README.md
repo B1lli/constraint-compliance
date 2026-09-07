@@ -97,9 +97,22 @@ git clone https://github.com/B1lli/constraint-compliance.git ~/.claude/skills/co
 
 or project-wide by cloning into `<project>/.claude/skills/constraint-compliance`.
 
-**Codex and other hosts**: place the directory under the host's skills folder. `SKILL.md` names the sub-agent
+**Codex**, user-wide:
+
+```bash
+git clone https://github.com/B1lli/constraint-compliance.git ~/.agents/skills/constraint-compliance
+```
+
+or project-wide by cloning into `<project>/.agents/skills/constraint-compliance`.
+See the [host skill-directory reference](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills).
+
+**Other hosts**: place the directory under the host's skills folder. `SKILL.md` names the sub-agent
 facility to use for independent evaluation on each host (`Agent` tool on Claude Code, `spawn_agent` on Codex) and
 falls back to a fresh-eyes re-read where none exists.
+
+Start a new host session in the project where you want to use the skill. Ask the agent to use
+`constraint-compliance` for a deliverable governed by a saved rule, and confirm it reads this `SKILL.md`.
+Installation makes the skill available; it does not prove automatic triggering or artifact compliance.
 
 The skill body is written in Chinese; the trigger description is bilingual. See [Limitations](#limitations).
 
